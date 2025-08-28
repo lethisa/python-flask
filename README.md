@@ -2,6 +2,8 @@
 
 ## Python Flask
 
+- Greetings Application
+
 ## MinIO
 
 - MinIO Server
