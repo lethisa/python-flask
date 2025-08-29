@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+ name: nginx
+ annotations:
+   author: "@lethisa"
+   origin: "The Pod will run the front-end application"
+   branch: "master"
+ Labels:
+   environment: frontend
+   tier: ui
+spec:
+ containers:
+ - name: nginx
+   image: nginx
+   resources:
+     requests:
+       memory: "64Mi"
+       cpu: "250m"
+     limits:
+       memory: "128Mi"
+       cpu: "500m"

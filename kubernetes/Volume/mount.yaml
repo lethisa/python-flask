@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+ name: pvdemo
+spec:
+ capacity:
+  storage: 2Gi
+ accessModes:
+  - ReadWriteOnce
+ hostPath:
+   path: "/usr/local"
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+ name: pvcdemo
+spec:
+ accessModes:
+   - ReadWriteOnce
+ volumeMode: Filesystem
+ resources:
+   requests:
+     storage: 1Gi
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app
+spec:
+  volumes:
+    - name: demovol
+      persistentVolumeClaim:
+        claimName: pvcdemo
+  containers:
+    - name: democontainer
+      image: nginx
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "250m"
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+      ports:
+        - containerPort: 80
+          name: "http-server"
+      volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: demovol

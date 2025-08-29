@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: count
+spec:
+  template:
+    spec:
+      containers:
+      - name: counter
+        image: busybox
+        command:
+        - /bin/sh
+        - -c
+        - counter=0; while [ $counter -lt 5 ]; do counter=$((counter+1)); \
+          echo "$counter"; sleep 3; done;
+      restart policy: Never
